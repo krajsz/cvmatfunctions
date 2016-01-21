@@ -5,6 +5,10 @@ cvMatFunctions::cvMatFunctions()
 {
 }
 
+cvMatFunctions::~cvMatFunctions()
+{
+}
+
 cv::Mat cvMatFunctions::bwlabel(const cv::Mat &image)
 {
 
@@ -63,14 +67,14 @@ double_t cvMatFunctions::graythresh(const cv::Mat &image)
     return cv::threshold(image, image.clone(), 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU );
 }
 
-void cvMatFunctions::size(const cv::Mat &image, Size &size, int &depth)
+void cvMatFunctions::size(const cv::Mat &image, Sizei size, int depth)
 {
     size.setWidth(image.rows);
     size.setHeight(image.cols) ;
     depth = image.depth();
 }
 
-void cvMatFunctions::bwmorphErode(cv::Mat &image, const int &times)
+void cvMatFunctions::bwmorphErode(cv::Mat &image, const int times)
 {
     cv::Mat ret;
 
@@ -81,14 +85,17 @@ void cvMatFunctions::bwmorphErode(cv::Mat &image, const int &times)
     cv::erode(image, ret, element, cv::Point(-1,-1), times );
 }
 
-cv::Mat cvMatFunctions::imresize(const cv::Mat &image, const Size &size)
+cv::Mat cvMatFunctions::imresize(const cv::Mat &image, const Sizei &size)
 {
-    cv::Mat ret = cv::Mat::zeros(size.getWidth(), size.getHeight(), image.type());
+    cv::Mat ret = cv::Mat::zeros(size.getCWidth(), size.getCHeight(), image.type());
 
-    if ( (size > 0) && (height > 0) &&
-         (size < std::numeric_limits<int>::max()) && (height < std::numeric_limits<int>::max()))
+    if (size.isValid())
     {
-        cv::resize(image, ret, cv::Size(size, height));
+        cv::resize(image, ret, cv::Size(size.getCWidth(), size.getCHeight()));
+    }
+    else
+    {
+        std::cout << "Invalid size on imresize!" << std::endl;
     }
     return ret;
 }
@@ -109,16 +116,16 @@ double_t cvMatFunctions::sum(const cv::Mat &image)
 
 cv::Point cvMatFunctions::find(const cv::Mat& image, const float_t& value, bool firstOrLast)
 {
-    uint8_t* pixel_ptr = static_cast<uint8_t*>(m_roi.data);
+    uint8_t* pixel_ptr = static_cast<uint8_t*>(image.data);
     cv::Scalar_<uint8_t> pixel;
     cv::Point ret {0 , 0};
     if (firstOrLast)
     {
-        for (int i = 0; i < m_roi.rows; ++i)
+        for (int i = 0; i < image.rows; ++i)
         {
-            for (int j = 0; j < m_roi.cols; ++j)
+            for (int j = 0; j < image.cols; ++j)
             {
-                pixel.val[0] = pixel_ptr[i * m_roi.cols * m_roi.channels() + j * m_roi.channels()];
+                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
 
                 if (pixel.val[0] == value)
                 {
@@ -128,11 +135,11 @@ cv::Point cvMatFunctions::find(const cv::Mat& image, const float_t& value, bool 
             }
         }
 
-        for (int i = 0; i < m_roi.rows; ++i)
+        for (int i = 0; i < image.rows; ++i)
         {
-            for (int j = 0; j < m_roi.cols; ++j)
+            for (int j = 0; j < image.cols; ++j)
             {
-                pixel.val[0] = pixel_ptr[i * m_roi.cols * m_roi.channels() + j * m_roi.channels()];
+                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
 
                 if (pixel.val[0] == value)
                 {
@@ -145,11 +152,11 @@ cv::Point cvMatFunctions::find(const cv::Mat& image, const float_t& value, bool 
     else
     {
 
-        for (int i = m_roi.rows-1; i >=0; --i)
+        for (int i = image.rows-1; i >=0; --i)
         {
-            for (int j =  m_roi.cols-1; j >= 0; --j)
+            for (int j =  image.cols-1; j >= 0; --j)
             {
-                pixel.val[0] = pixel_ptr[i * m_roi.cols * m_roi.channels() + j * m_roi.channels()];
+                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
 
                 if (pixel.val[0] == value)
                 {
@@ -159,11 +166,11 @@ cv::Point cvMatFunctions::find(const cv::Mat& image, const float_t& value, bool 
             }
         }
 
-        for (int i = m_roi.rows-1; i >= 0; --i)
+        for (int i = image.rows-1; i >= 0; --i)
         {
-            for (int j = m_roi.cols-1; j >= 0; --j)
+            for (int j = image.cols-1; j >= 0; --j)
             {
-                pixel.val[0] = pixel_ptr[i * m_roi.cols * m_roi.channels() + j * m_roi.channels()];
+                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
 
                 if (pixel.val[0] == value)
                 {

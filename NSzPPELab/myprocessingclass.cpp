@@ -44,8 +44,8 @@ end
      */
     float zoom = m_new_size_of_roi / m_old_size_of_roi;
 
-    size(m_input_image, m_image_height, m_image_width, m_image_depth);
-    m_input_image = imresize(m_input_image, m_input_image.size().height * zoom, m_input_image.size().width * zoom);
+    size(m_input_image, m_image_size, m_image_depth);
+    m_input_image = imresize(m_input_image,Sizei(m_input_image.size().height * zoom, m_input_image.size().width * zoom));
 }
 
 
@@ -153,7 +153,7 @@ end
         }
     }
 
-    m_optic_disc_diameter = y2 - y1;
+    m_optic_disc.setDiameter( y2 - y1);
 }
 
 void MyProcessingClass::EntropyOfImage()
@@ -241,7 +241,8 @@ void MyProcessingClass::GetOD_Coordinates()
     {
         tmp = m_bw;
         cv::erode(m_bw, m_bw, cv::Mat());
-        ++m_optic_disc_diameter;
+        m_optic_disc.setDiameter(m_optic_disc.getDiameter()+1);
+        //++m_optic_disc_diameter;
     }
 
     uint8_t* pixel_ptr = static_cast<uint8_t*>(tmp.data);
@@ -258,9 +259,7 @@ void MyProcessingClass::GetOD_Coordinates()
 
                     if (pixel.val[0] == 255)
                     {
-                        m_optic_disc_center_x = i;
-                        m_optic_disc_center_y = j;
-
+                        m_optic_disc.setCoordinate( Coordinate<int>(i,j));
                         break;
                     }
                 }

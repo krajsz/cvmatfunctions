@@ -1,16 +1,19 @@
 #include "coordinate.h"
 
 // todo: throwing exception when getting invalid datas
+template <class T>
+Coordinate<T>::Coordinate()
+{
+}
 
-
-template<typename T>
-Coordinate::Coordinate(const T& xCoord, const T& yCoord) : valid(false)
+template<class T>
+Coordinate<T>::Coordinate(const T& xCoord, const T& yCoord) : m_valid(false)
 {
 
-    if (Utils::checkAllowedType(typeid(T), allowedTypes))
+    if (Utils::checkAllowedType(typeid(T), m_allowedTypes))
     {
-        setX(x);
-        setY(y);
+        setX(xCoord);
+        setY(yCoord);
     }
     else
     {
@@ -18,7 +21,8 @@ Coordinate::Coordinate(const T& xCoord, const T& yCoord) : valid(false)
     }
 }
 
-Coordinate::Coordinate(const Coordinate &other)
+template <class T>
+Coordinate<T>::Coordinate(const Coordinate &other)
 {
     if (other.isValid())
     {
@@ -31,36 +35,38 @@ Coordinate::Coordinate(const Coordinate &other)
     }
 }
 
-bool Coordinate::isValid() const
+template <class T>
+bool Coordinate<T>::isValid() const
 {
-    return this->valid;
+    return this->m_valid;
 }
 
-template <typename T>
-void Coordinate::setX(const T &xCoord)
+template <class T>
+void Coordinate<T>::setX(const T &xCoord)
 {
     setFirst(xCoord);
 }
 
-template <typename T>
-void Coordinate::setY(const T &yCoord)
+template <class T>
+void Coordinate<T>::setY(const T &yCoord)
 {
     setSecond(yCoord);
 }
 
-template <typename T>
-const T& Coordinate::getX() const
+template <class T>
+const T& Coordinate<T>::getX() const
 {
-    return getFirst();
+    return this->getFirst();
 }
 
-template <typename T>
-const T& Coordinate::getY() const
+template <class T>
+const T& Coordinate<T>::getY() const
 {
-    return getSecond();
+    return this->getSecond();
 }
 
-Coordinate& Coordinate::operator =(const Coordinate& other)
+template <class T>
+Coordinate<T> & Coordinate<T>::operator =(const Coordinate& other)
 {
     this->setX(other.getX());
     this->setY(other.getY());

@@ -1,7 +1,8 @@
 #ifndef MYPROCESSINGCLASS_H
 #define MYPROCESSINGCLASS_H
 
-#include <cvmatfunctions.h>
+#include "opticdisc.h"
+#include "cvmatfunctions.h"
 
 using std::endl;
 
@@ -44,16 +45,13 @@ private:
 
     std::string m_window_name = "Test";
 
-    int m_optic_disc_center_x;
-    int m_optic_disc_center_y;
-    int m_optic_disc_diameter = 0;
+    OpticDisc m_optic_disc;
+    Sizei m_image_size;
 
+    int m_image_depth;
     float m_old_size_of_roi;
     float m_new_size_of_roi;
 
-    int m_image_depth;
-    int m_image_width;
-    int m_image_height;
 
 };
 

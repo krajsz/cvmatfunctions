@@ -2,8 +2,6 @@
 #define MYPAIR_H
 #pragma once
 
-#include "utils.h"
-
 template <class T>
 class MyPair
 {

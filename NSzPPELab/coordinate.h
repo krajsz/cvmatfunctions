@@ -1,14 +1,19 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
+
+#pragma once
+
 #include <typeinfo>
+#include <iostream>
 #include <array>
 #include "utils.h"
 #include "mypair.h"
 
-template <typename T>
+template <class T>
 class Coordinate : public MyPair<T>
 {
 public:
+    Coordinate();
     Coordinate(const T& xCoord, const T& yCoord);
     Coordinate(const Coordinate& other);
     ~Coordinate();
@@ -24,9 +29,9 @@ public:
 
 private:
 
-    bool valid;
+    bool m_valid;
 
-    std::array<3, std::type_info> allowedTypes { typeid(int), typeid(float), typeid(double) };
+    std::array<std::type_info, 3> m_allowedTypes { typeid(int), typeid(float), typeid(double) };
 
 };
 

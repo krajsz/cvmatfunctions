@@ -2,18 +2,35 @@
 
 
 // todo: throwing exception when getting invalid datas
+template <class T>
+Size<T>::Size()
+{
+}
 
-template<typename T>
-Size::Size(const T& width, const T& height) : valid(false)
+template<class T>
+T& Size<T>::getWidth()
+{
+   return this->m_first;
+}
+
+template <class T>
+T& Size<T>::getHeight()
+{
+    return this->m_second;
+}
+
+template<class T>
+Size<T>::Size(const T& width, const T& height) : m_valid(false)
 {
 
-    if (Utils::checkAllowedType(typeid(T), allowedTypes))
+    if (Utils::checkAllowedType(typeid(T), m_allowedTypes))
     {
-        if ((width > 0) && (height > 0))
+        if ((width > 0) && (height > 0) &&
+                (width < std::numeric_limits<int>::max()) && (height < std::numeric_limits<int>::max()))
         {
             setWidth(width);
             setHeight(height);
-            valid = true;
+            m_valid = true;
         }
         else
         {
@@ -26,7 +43,8 @@ Size::Size(const T& width, const T& height) : valid(false)
     }
 }
 
-Size::Size(const Size &other)
+template <class T>
+Size<T>::Size(const Size &other)
 {
     if (other.isValid())
     {
@@ -39,36 +57,38 @@ Size::Size(const Size &other)
     }
 }
 
-bool Size::isValid() const
+template <class T>
+bool Size<T>::isValid() const
 {
-    return this->valid;
+    return this->m_valid;
 }
 
-template <typename T>
-void Size::setWidth(const T &width)
+template <class T>
+void Size<T>::setWidth(const T &width)
 {
-    setFirst(width);
+    this->setFirst(width);
 }
 
-template <typename T>
-void Size::setHeight(const T &height)
+template <class T>
+void Size<T>::setHeight(const T &height)
 {
-    setSecond(height);
+    this->setSecond(height);
 }
 
-template <typename T>
-const T& Size::getWidth() const
+template <class T>
+const T& Size<T>::getCWidth() const
 {
-    return getFirst();
+    return this->getFirst();
 }
 
-template <typename T>
-const T& Size::getHeight() const
+template <class T>
+const T& Size<T>::getCHeight() const
 {
-    return getSecond();
+    return this->getSecond();
 }
 
-Size& Size::operator =(const Size& other)
+template <class T>
+Size<T>& Size<T>::operator =(const Size& other)
 {
     this->setWidth(other.getWidth());
     this->setHeight(other.getHeight());
