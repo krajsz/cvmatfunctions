@@ -3,12 +3,13 @@
 #pragma once
 
 #include <typeinfo>
-#include <array>
+#include <vector>
+#include <string>
 class Utils
 {
 public:
     Utils();
-    static bool checkAllowedType(const std::type_info& typeinfo, const std::array<std::type_info, 3>& allowedTypes);
+    static bool checkAllowedType(const std::type_info& typeinfo, const std::vector<std::string> &allowedTypes);
 };
 
 #endif // UTILS_H

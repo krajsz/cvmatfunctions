@@ -6,6 +6,19 @@ Coordinate<T>::Coordinate()
 {
 }
 
+template <class T>
+Coordinate<T>::~Coordinate()
+{
+}
+
+template <class T>
+std::string Coordinate<T>::toString() const
+{
+    std::stringstream ss;
+    ss << "Coordinate: x: " << this->getX() << " y: " << this->getY();
+    return ss.str();
+}
+
 template<class T>
 Coordinate<T>::Coordinate(const T& xCoord, const T& yCoord) : m_valid(false)
 {
@@ -44,13 +57,13 @@ bool Coordinate<T>::isValid() const
 template <class T>
 void Coordinate<T>::setX(const T &xCoord)
 {
-    setFirst(xCoord);
+    this->setFirst(xCoord);
 }
 
 template <class T>
 void Coordinate<T>::setY(const T &yCoord)
 {
-    setSecond(yCoord);
+    this->setSecond(yCoord);
 }
 
 template <class T>
@@ -73,5 +86,8 @@ Coordinate<T> & Coordinate<T>::operator =(const Coordinate& other)
 
     return *this;
 }
+
+template class Coordinate<int>;
+template class Coordinate<float>;
 
 

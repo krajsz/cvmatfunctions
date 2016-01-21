@@ -29,10 +29,12 @@ public:
     T& getWidth();
     T& getHeight();
 
+    std::string toString() const override;
+
 private:
 
     bool m_valid;
-    std::array<std::type_info, 3> m_allowedTypes { typeid(int), typeid(float) };
+    std::vector<std::string> m_allowedTypes {typeid(int).name(), typeid(float).name()} ;
 };
 
 #endif // SIZE_H

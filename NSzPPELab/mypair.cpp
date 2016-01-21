@@ -1,5 +1,22 @@
 #include "mypair.h"
 
+template <class T>
+MyPair<T>::MyPair()
+{
+}
+
+template <class T>
+MyPair<T>::~MyPair()
+{
+}
+
+template <class T>
+std::string MyPair<T>::toString() const
+{
+    std::stringstream ss;
+    ss << "MyPair: " << this->getFirst() << ", "<< this->getSecond();
+    return ss.str();
+}
 
 template <class T>
 MyPair<T>::MyPair(const T &first, const T &second): m_first(first), m_second(second), m_data(new T[2])
@@ -31,3 +48,8 @@ const T& MyPair<T>::getSecond() const
 {
     return this->m_second;
 }
+
+template class MyPair<int>;
+template class MyPair<float>;
+template class MyPair<double>;
+

@@ -4,11 +4,11 @@ Utils::Utils()
 {
 }
 
-bool Utils::checkAllowedType(const std::type_info &typeinfo, const std::array<std::type_info, 3> &allowedTypes)
+bool Utils::checkAllowedType(const std::type_info &typeinfo, const std::vector<std::string> &allowedTypes)
 {
     for (const auto& ti : allowedTypes)
     {
-        if (ti.name() == typeinfo.name())
+        if (ti == typeinfo.name())
         {
             return true;
         }

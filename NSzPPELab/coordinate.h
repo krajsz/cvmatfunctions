@@ -5,7 +5,10 @@
 
 #include <typeinfo>
 #include <iostream>
+#include <vector>
 #include <array>
+#include <sstream>
+#include <string>
 #include "utils.h"
 #include "mypair.h"
 
@@ -27,11 +30,13 @@ public:
     const T& getX() const;
     const T& getY() const;
 
+    std::string toString() const override;
+
 private:
 
     bool m_valid;
 
-    std::array<std::type_info, 3> m_allowedTypes { typeid(int), typeid(float), typeid(double) };
+    std::vector<std::string> m_allowedTypes {typeid(int).name(), typeid(float).name(), typeid(double).name()} ;
 
 };
 

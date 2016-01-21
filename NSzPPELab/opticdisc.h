@@ -14,6 +14,7 @@ public:
     void setCoordinate(const Coordinate<int>& coordinate);
     void setDiameter(const int& diameter);
 
+    std::string toString() const;
 private:
 
     Coordinate<int> m_coordinate;

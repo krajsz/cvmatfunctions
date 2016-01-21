@@ -16,6 +16,7 @@ public:
     void read(const std::string& fileName);
     void show();
 
+    void tests();
 private:
     void PreProcessingToEntropy();
     cv::Mat ResizeImage();

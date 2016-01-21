@@ -7,6 +7,19 @@ Size<T>::Size()
 {
 }
 
+template <class T>
+Size<T>::~Size()
+{
+}
+
+template <class T>
+std::string Size<T>::toString() const
+{
+    std::stringstream ss;
+    ss << "Size: width: " << this->getCWidth() << " height: "<< this->getCHeight();
+    return ss.str();
+}
+
 template<class T>
 T& Size<T>::getWidth()
 {
@@ -48,8 +61,8 @@ Size<T>::Size(const Size &other)
 {
     if (other.isValid())
     {
-        this->setWidth(other.getWidth());
-        this->setHeight(other.getHeight());
+        this->setWidth(other.getCWidth());
+        this->setHeight(other.getCHeight());
     }
     else
     {
@@ -90,8 +103,11 @@ const T& Size<T>::getCHeight() const
 template <class T>
 Size<T>& Size<T>::operator =(const Size& other)
 {
-    this->setWidth(other.getWidth());
-    this->setHeight(other.getHeight());
+    this->setWidth(other.getCWidth());
+    this->setHeight(other.getCHeight());
 
     return *this;
 }
+
+template class Size<int>;
+template class Size<float>;

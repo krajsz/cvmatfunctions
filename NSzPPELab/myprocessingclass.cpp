@@ -8,6 +8,18 @@ MyProcessingClass::~MyProcessingClass()
 {
 }
 
+void MyProcessingClass::tests()
+{
+   /* Coordinate<int> c(2,3);
+
+    std::cout <<c.toString();*/
+
+    /*Sizei s(1,2);
+
+    std::cout << s.toString();*/
+
+}
+
 void MyProcessingClass::read(const std::__cxx11::string &fileName)
 {
     m_window_name = "Test - " + fileName;

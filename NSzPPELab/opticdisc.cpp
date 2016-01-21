@@ -17,6 +17,13 @@ OpticDisc::OpticDisc(const Coordinate<int> &coordinate, int diameter)
     }
 }
 
+std::string OpticDisc::toString() const
+{
+    std::stringstream ss;
+    ss << "Optic disc: " << this->m_coordinate.toString() << ", " << this->m_diameter;
+    return ss.str();
+}
+
 const Coordinate<int> &OpticDisc::getCoordinate() const
 {
     return this->m_coordinate;

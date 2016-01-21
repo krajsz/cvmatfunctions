@@ -8,14 +8,15 @@ int main (int argc, char** argv)
     MyProcessingClass test_class;
     try
     {
-
-        std::string argvstring(argv[1]);
+        test_class.tests();
+        /* std::string argvstring(argv[1]);
 
         if (argvstring.size() != 0)
         {
             test_class.read(argvstring);
             test_class.show();
-        }
+        }*/
+
     }
     catch(const cv::Exception& ex)
     {
