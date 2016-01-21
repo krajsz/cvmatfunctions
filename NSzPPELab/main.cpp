@@ -1,10 +1,25 @@
 #include <iostream>
+#include "myprocessingclass.h"
 
-using namespace std;
+using std::endl;
 
-int main()
+int main (int argc, char** argv)
 {
-    cout << "Hello World!" << endl;
+    MyProcessingClass test_class;
+    try
+    {
+
+        std::string argvstring(argv[1]);
+
+        if (argvstring.size() != 0)
+        {
+            test_class.read(argvstring);
+            test_class.show();
+        }
+    }
+    catch(const cv::Exception& ex)
+    {
+        std::cout << "Error: " << ex.what() << std::endl;
+    }
     return 0;
 }
-
