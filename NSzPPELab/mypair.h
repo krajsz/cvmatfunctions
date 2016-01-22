@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <tuple>
 
 // base template class to handle datas which
 
@@ -31,6 +32,9 @@ protected:
     T m_first;
     T m_second;
 };
+
+template<class T>
+bool operator ==(const MyPair<T>& firstPair, const MyPair<T>& secondPair);
 
 
 #endif // MYPAIR_H

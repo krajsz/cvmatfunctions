@@ -54,6 +54,14 @@ const T& MyPair<T>::getSecond() const
     return this->m_second;
 }
 
+template <class T>
+bool operator ==(const MyPair<T>& firstPair, const MyPair<T>& secondPair)
+{
+    return std::tie(firstPair.getFirst(), firstPair.getSecond()) ==
+            std::tie(secondPair.getFirst(), secondPair.getSecond());
+}
+
+
 template class MyPair<int>;
 template class MyPair<float>;
 template class MyPair<double>;
