@@ -12,6 +12,9 @@
 #include "utils.h"
 #include "mypair.h"
 
+// class that handles coordinates, coordinates are just value-pairs,
+// there are a few type restrictions
+
 template <class T>
 class Coordinate : public MyPair<T>
 {
@@ -34,8 +37,10 @@ public:
 
 private:
 
+    // holds whether this coordinate is valid or not
     bool m_valid;
 
+    // the allowed coordinate types
     std::vector<std::string> m_allowedTypes {typeid(int).name(), typeid(float).name(), typeid(double).name()} ;
 
 };

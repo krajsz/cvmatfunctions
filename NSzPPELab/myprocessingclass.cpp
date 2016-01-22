@@ -20,7 +20,7 @@ void MyProcessingClass::tests()
 
 }
 
-void MyProcessingClass::read(const std::__cxx11::string &fileName)
+void MyProcessingClass::read(const std::string &fileName)
 {
     m_window_name = "Test - " + fileName;
     m_input_image = cv::imread(fileName);

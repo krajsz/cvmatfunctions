@@ -14,6 +14,9 @@ using Pixel = cv::Point3_<uint8_t>;
 using Sizei = Size<int>;
 using Sizef = Size<float>;
 
+// class that provides some of Matlab's functions ported to C++/C++11, using OpenCV.
+// the names of the functions are equivalent to the ones used in Matlab.
+
 class cvMatFunctions
 {
 public:

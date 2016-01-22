@@ -23,7 +23,7 @@ std::string Size<T>::toString() const
 template<class T>
 T& Size<T>::getWidth()
 {
-   return this->m_first;
+    return this->m_first;
 }
 
 template <class T>
@@ -43,6 +43,7 @@ Size<T>::Size(const T& width, const T& height) : m_valid(false)
         {
             setWidth(width);
             setHeight(height);
+            this->setData();
             m_valid = true;
         }
         else
@@ -63,6 +64,7 @@ Size<T>::Size(const Size &other)
     {
         this->setWidth(other.getCWidth());
         this->setHeight(other.getCHeight());
+        this->m_data = new T(*other.m_data);
     }
     else
     {
@@ -103,8 +105,15 @@ const T& Size<T>::getCHeight() const
 template <class T>
 Size<T>& Size<T>::operator =(const Size& other)
 {
-    this->setWidth(other.getCWidth());
-    this->setHeight(other.getCHeight());
+    if (other.isValid())
+    {
+        this->setWidth(other.getCWidth());
+        this->setHeight(other.getCHeight());
+    }
+    else
+    {
+        std::cout << "Copy assignment failed, other is invalid Size" << std::endl;
+    }
 
     return *this;
 }

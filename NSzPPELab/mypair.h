@@ -5,6 +5,8 @@
 #include <iostream>
 #include <sstream>
 
+// base template class to handle datas which
+
 template <class T>
 class MyPair
 {
@@ -14,6 +16,7 @@ public:
     MyPair(const T& first, const T& second);
     void setFirst(const T& first);
     void setSecond(const T& second);
+    void setData();
 
     const T& getFirst() const;
     const T& getSecond() const;
@@ -22,7 +25,9 @@ public:
 
 protected:
 
+    // pointer to our datas
     T* m_data;
+
     T m_first;
     T m_second;
 };

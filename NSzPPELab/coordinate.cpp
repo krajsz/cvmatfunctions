@@ -27,6 +27,8 @@ Coordinate<T>::Coordinate(const T& xCoord, const T& yCoord) : m_valid(false)
     {
         setX(xCoord);
         setY(yCoord);
+        this->setData();
+        m_valid = true;
     }
     else
     {
@@ -41,6 +43,7 @@ Coordinate<T>::Coordinate(const Coordinate &other)
     {
         this->setX(other.getX());
         this->setY(other.getY());
+        this->m_data = new T(*other.m_data);
     }
     else
     {
@@ -81,13 +84,19 @@ const T& Coordinate<T>::getY() const
 template <class T>
 Coordinate<T> & Coordinate<T>::operator =(const Coordinate& other)
 {
-    this->setX(other.getX());
-    this->setY(other.getY());
+    if (other.isValid())
+    {
+        this->setX(other.getX());
+        this->setY(other.getY());
+        this->m_data = new T(*other.m_data);
+    }
+    else
+    {
+        std::cout << "Copy assignment failed, other is invalid!";
+    }
 
     return *this;
 }
 
 template class Coordinate<int>;
 template class Coordinate<float>;
-
-

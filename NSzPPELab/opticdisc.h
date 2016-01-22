@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include "coordinate.h"
+
+// class that handles an optic disc
+
 class OpticDisc
 {
 public:
