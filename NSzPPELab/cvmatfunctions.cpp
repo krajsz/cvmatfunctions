@@ -121,61 +121,77 @@ cv::Point cvMatFunctions::find(const cv::Mat& image, const float_t& value, bool 
     cv::Point ret {0 , 0};
     if (firstOrLast)
     {
-        for (int i = 0; i < image.rows; ++i)
+        int i { 0 };
+        int j { 0 };
+#pragma omp parallel
         {
-            for (int j = 0; j < image.cols; ++j)
+#pragma omp for private(j)
+            for ( i = 0; i < image.rows; ++i)
             {
-                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
-
-                if (pixel.val[0] == value)
+                for ( j = 0; j < image.cols; ++j)
                 {
-                    ret.x = i;
-                    break;
+                    pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
+
+                    if (pixel.val[0] == value)
+                    {
+                        ret.x = i;
+                        break;
+                    }
                 }
             }
         }
-
-        for (int i = 0; i < image.rows; ++i)
+#pragma omp parallel
         {
-            for (int j = 0; j < image.cols; ++j)
-            {
-                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
+#pragma omp for private(j)
 
-                if (pixel.val[0] == value)
+            for ( i = 0; i < image.rows; ++i)
+            {
+                for ( j = 0; j < image.cols; ++j)
                 {
-                    ret.y = j;
-                    break;
+                    pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
+
+                    if (pixel.val[0] == value)
+                    {
+                        ret.y = j;
+                        break;
+                    }
                 }
             }
         }
     }
     else
     {
-
-        for (int i = image.rows-1; i >=0; --i)
+#pragma omp parallel
         {
-            for (int j =  image.cols-1; j >= 0; --j)
+#pragma omp for private(j)
+            for ( i = image.rows-1; i >=0; --i)
             {
-                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
-
-                if (pixel.val[0] == value)
+                for ( j =  image.cols-1; j >= 0; --j)
                 {
-                    ret.x = i;
-                    break;
+                    pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
+
+                    if (pixel.val[0] == value)
+                    {
+                        ret.x = i;
+                        break;
+                    }
                 }
             }
         }
-
-        for (int i = image.rows-1; i >= 0; --i)
+#pragma omp parallel
         {
-            for (int j = image.cols-1; j >= 0; --j)
+#pragma omp for private(j)
+            for ( i = image.rows-1; i >= 0; --i)
             {
-                pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
-
-                if (pixel.val[0] == value)
+                for ( j = image.cols-1; j >= 0; --j)
                 {
-                    ret.y = j;
-                    break;
+                    pixel.val[0] = pixel_ptr[i * image.cols * image.channels() + j * image.channels()];
+
+                    if (pixel.val[0] == value)
+                    {
+                        ret.y = j;
+                        break;
+                    }
                 }
             }
         }

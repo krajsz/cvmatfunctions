@@ -15,7 +15,7 @@ template <class T>
 std::string Coordinate<T>::toString() const
 {
     std::stringstream ss;
-    ss << "Coordinate: x: " << this->getX() << " y: " << this->getY();
+    ss << "Coordinate: x: " << this->getX() << " y: " << this->getY() << std::endl;
     return ss.str();
 }
 

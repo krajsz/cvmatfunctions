@@ -2,6 +2,7 @@
 
 MyProcessingClass::MyProcessingClass()
 {
+    std::set_terminate(terminate_handler);
 }
 
 MyProcessingClass::~MyProcessingClass()
@@ -10,14 +11,27 @@ MyProcessingClass::~MyProcessingClass()
 
 void MyProcessingClass::tests()
 {
-   /* Coordinate<int> c(2,3);
+    Coordinate<int> c(2,3);
 
-    std::cout <<c.toString();*/
+    std::cout <<c.toString() ;
+    c.setFirst(5);
+    c.setSecond(7);
 
-    /*Sizei s(1,2);
+    std::cout << c.toString();
+    Sizei s(1,2);
 
-    std::cout << s.toString();*/
+    std::cout << s.toString();
 
+    OpticDisc od(Coordinate<int> (6,7),8);
+
+    std::cout << od.toString();
+
+}
+
+void MyProcessingClass::terminate_handler()
+{
+    std::cout << "Error, something happened. /*copyright 2016, win10 install*/" << std::endl;
+    std::abort();
 }
 
 void MyProcessingClass::read(const std::string &fileName)
@@ -28,6 +42,7 @@ void MyProcessingClass::read(const std::string &fileName)
     {
         m_is_input_empty = true;
         std::cout << "Input image is empty!" << endl;
+        std::terminate();
     }
 }
 
@@ -133,7 +148,7 @@ end
     uint8_t* pixel_ptr = static_cast<uint8_t*>(m_roi.data);
     cv::Scalar_<uint8_t> pixel;
 
-    int y1;
+    int y1 { -1 };
 
     for (int i = 0; i < m_roi.rows; ++i)
     {
@@ -149,7 +164,7 @@ end
         }
     }
 
-    int y2;
+    int y2 { -1 };
 
     for (int i = m_roi.rows-1; i >= m_roi.rows; --i)
     {
@@ -165,7 +180,15 @@ end
         }
     }
 
-    m_optic_disc.setDiameter( y2 - y1);
+    if ( (y1 != -1) && (y2 != -1))
+    {
+        m_optic_disc.setDiameter( y2 - y1);
+    }
+    else
+    {
+        std::cout << "Diameter of roi couldn't be determined!" << std::endl;
+        std::terminate();
+    }
 }
 
 void MyProcessingClass::EntropyOfImage()
@@ -271,7 +294,7 @@ void MyProcessingClass::GetOD_Coordinates()
 
                     if (pixel.val[0] == 255)
                     {
-                        m_optic_disc.setCoordinate( Coordinate<int>(i,j));
+                        m_optic_disc.setCoordinate(Coordinate<int>(i,j));
                         break;
                     }
                 }
@@ -282,7 +305,7 @@ void MyProcessingClass::GetOD_Coordinates()
 
 void MyProcessingClass::MainEntropy()
 {
-/*
+    /*
  * function [X,Y,R,BW] = MainEntropy(image)
 
     [ROI,D] = DiameterOfROI(image);

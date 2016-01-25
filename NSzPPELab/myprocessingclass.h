@@ -4,6 +4,8 @@
 #include "opticdisc.h"
 #include "cvmatfunctions.h"
 
+#include <exception>
+
 using std::endl;
 
 
@@ -26,6 +28,8 @@ private:
     void GetOD_Coordinates();
     void MainEntropy();
     void main_final_ENTROPY_ODC();
+
+    static void terminate_handler();
 
     cv::Mat m_input_image;
     cv::Mat m_output_image;

@@ -1,7 +1,7 @@
 #include "mypair.h"
 
 template <class T>
-MyPair<T>::MyPair()
+MyPair<T>::MyPair(): m_data(new T[2]{})
 {
 }
 

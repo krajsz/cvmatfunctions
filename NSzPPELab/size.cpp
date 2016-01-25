@@ -16,7 +16,7 @@ template <class T>
 std::string Size<T>::toString() const
 {
     std::stringstream ss;
-    ss << "Size: width: " << this->getCWidth() << " height: "<< this->getCHeight();
+    ss << "Size: width: " << this->getCWidth() << " height: "<< this->getCHeight() << std::endl;
     return ss.str();
 }
 
