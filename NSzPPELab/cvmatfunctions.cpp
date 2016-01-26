@@ -61,7 +61,30 @@ cv::Mat cvMatFunctions::adapthisteq(const cv::Mat &imgage)
 
 double_t cvMatFunctions::entropy(const cv::Mat &image)
 {
-    return 0;
+    cv::Mat im = image.clone();
+
+    if (im.channels()==3)
+    {
+        cv::cvtColor(im,im,CV_BGR2GRAY);
+    }
+
+    int histSize = 256;
+    float range[] = { 0, 256 } ;
+    const float* histRange = { range };
+
+    bool uniform = true;
+    bool accumulate = false;
+
+    cv::Mat hist;
+    cv::calcHist( &im, 1, 0, cv::Mat(), hist, 1, &histSize, &histRange, uniform, accumulate );
+    hist /= im.total();
+
+    cv::Mat logP;
+    cv::log(hist,logP);
+
+    double_t entropy = -1*cv::sum(hist.mul(logP)).val[0];
+
+    return entropy;
 }
 
 double_t cvMatFunctions::graythresh(const cv::Mat &image)

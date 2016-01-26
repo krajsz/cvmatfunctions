@@ -60,7 +60,6 @@ private:
     float m_old_size_of_roi;
     float m_new_size_of_roi;
 
-
 };
 
 #endif // MYPROCESSINGCLASS_H
