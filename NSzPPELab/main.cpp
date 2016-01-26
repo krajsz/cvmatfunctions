@@ -15,6 +15,7 @@ int main (int argc, char** argv)
         {
             test_class.read(argvstring);
             test_class.getInput() = test_class.im2bw(test_class.getCInput(), 100);
+            test_class.getInput() = test_class.medfilt2(test_class.getCInput(), 5);
 
             test_class.show();
 
