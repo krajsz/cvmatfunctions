@@ -28,4 +28,7 @@ CONFIG += C++11
 INCLUDEPATH +=-I/usr/local/include \
                 -I/usr/local/include/opencv
 
+QMAKE_CXXFLAGS+= -fopenmp
+QMAKE_LFLAGS  +=  -fopenmp
+
 LIBS += `pkg-config opencv --libs --cflags`

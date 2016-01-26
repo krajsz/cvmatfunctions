@@ -23,7 +23,7 @@ public:
     cvMatFunctions();
     ~cvMatFunctions();
     void bwmorphErode(cv::Mat& image, const int times = 1);
-    void size(const cv::Mat& image, Sizei size, int depth = 0);
+    void size(const cv::Mat& image, Sizei &size, int &depth);
 
     cv::Mat imresize(const cv::Mat& image, const Sizei& size);
     cv::Mat im2bw(const cv::Mat& image,const float_t& level);

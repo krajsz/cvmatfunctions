@@ -3,6 +3,9 @@
 
 cvMatFunctions::cvMatFunctions()
 {
+#ifdef _OPENMP
+    std::cout << "OpenMP is used." << std::endl;
+#endif
 }
 
 cvMatFunctions::~cvMatFunctions()
@@ -67,7 +70,7 @@ double_t cvMatFunctions::graythresh(const cv::Mat &image)
     return cv::threshold(image, image.clone(), 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU );
 }
 
-void cvMatFunctions::size(const cv::Mat &image, Sizei size, int depth)
+void cvMatFunctions::size(const cv::Mat &image, Sizei& size, int& depth)
 {
     size.setWidth(image.rows);
     size.setHeight(image.cols) ;
@@ -119,10 +122,10 @@ cv::Point cvMatFunctions::find(const cv::Mat& image, const float_t& value, bool 
     uint8_t* pixel_ptr = static_cast<uint8_t*>(image.data);
     cv::Scalar_<uint8_t> pixel;
     cv::Point ret {0 , 0};
+    int i { 0 };
+    int j { 0 };
     if (firstOrLast)
     {
-        int i { 0 };
-        int j { 0 };
 #pragma omp parallel
         {
 #pragma omp for private(j)

@@ -1,6 +1,6 @@
 #include "myprocessingclass.h"
 
-MyProcessingClass::MyProcessingClass()
+MyProcessingClass::MyProcessingClass() : m_window_size(Sizei(800, 600))
 {
     std::set_terminate(terminate_handler);
 }
@@ -30,7 +30,7 @@ void MyProcessingClass::tests()
 
 void MyProcessingClass::terminate_handler()
 {
-    std::cout << "Error, something happened. /*copyright 2016, win10 install*/" << std::endl;
+    std::cout << "Error, something happened. /*copyright 2015, win10 install*/" << std::endl;
     std::abort();
 }
 
@@ -48,16 +48,37 @@ void MyProcessingClass::read(const std::string &fileName)
 
 void MyProcessingClass::show()
 {
+    int key { -1 };
     if (!m_is_input_empty)
     {
-        while(cv::waitKey(60) != 27)
+        while( (key = cv::waitKey(30) & 0xFF))
         {
+            if (key == 27)
+            {
+                cv::destroyWindow(m_window_name);
+                break;
+            }
             cv::imshow(m_window_name, m_input_image);
         }
     }
+    else
+    {
+        std::cout << "Failed to show the image, it's empty!" << std::endl;
+        std::terminate();
+    }
 }
 
-cv::Mat MyProcessingClass::ResizeImage()
+cv::Mat& MyProcessingClass::getInput()
+{
+    return this->m_input_image;
+}
+
+const cv::Mat& MyProcessingClass::getCInput() const
+{
+    return this->m_input_image;
+}
+
+void MyProcessingClass::ResizeImage()
 {
     /*
      * *
@@ -143,42 +164,20 @@ end
 
     cv::threshold(m_roi, m_roi, threshold_value, 255, CV_THRESH_BINARY);
 
-    cv::erode(m_roi, m_roi, 3);
+    m_roi = medfilt2(m_red_channel, 7);
+    m_roi = im2bw(m_roi, graythresh(m_roi) / 10.0);
 
-    uint8_t* pixel_ptr = static_cast<uint8_t*>(m_roi.data);
-    cv::Scalar_<uint8_t> pixel;
+    bwmorphErode(m_roi, 3);
 
-    int y1 { -1 };
+    int y1 {-1};
+    int y2 {-1};
 
-    for (int i = 0; i < m_roi.rows; ++i)
-    {
-        for (int j = 0; j < m_roi.cols; ++j)
-        {
-            pixel.val[0] = pixel_ptr[i * m_roi.cols * m_roi.channels() + j * m_roi.channels()];
+    cv::Point p{-1, -1 };
+    p = find(m_roi, 255);
+    y1 = p.y;
 
-            if (pixel.val[0] == 255)
-            {
-                y1 = j;
-                break;
-            }
-        }
-    }
-
-    int y2 { -1 };
-
-    for (int i = m_roi.rows-1; i >= m_roi.rows; --i)
-    {
-        for (int j = m_roi.cols-1; j >= m_roi.cols; --j)
-        {
-            pixel.val[0] = pixel_ptr[i * m_roi.cols * m_roi.channels() + j * m_roi.channels()];
-
-            if (pixel.val[0] == 255)
-            {
-                y2 = j;
-                break;
-            }
-        }
-    }
+    p = find(m_roi, 255, false);
+    y2 = p.y;
 
     if ( (y1 != -1) && (y2 != -1))
     {
@@ -211,6 +210,7 @@ void MyProcessingClass::EntropyOfImage()
      */
 
     cv::Mat entIm = cv::Mat::zeros(m_input_image.rows, m_input_image.cols, m_input_image.type());
+
 
 
 }
@@ -280,27 +280,6 @@ void MyProcessingClass::GetOD_Coordinates()
         //++m_optic_disc_diameter;
     }
 
-    uint8_t* pixel_ptr = static_cast<uint8_t*>(tmp.data);
-    cv::Scalar_<uint8_t> pixel;
-#pragma omp parallel numthreads(4)
-    {
-#pragma omp for
-        {
-            for (int i = 0; i < tmp.rows; ++i)
-            {
-                for (int j = 0; j < tmp.cols; ++j)
-                {
-                    pixel.val[0] = pixel_ptr[i * tmp.cols * tmp.channels() + j * tmp.channels()];
-
-                    if (pixel.val[0] == 255)
-                    {
-                        m_optic_disc.setCoordinate(Coordinate<int>(i,j));
-                        break;
-                    }
-                }
-            }
-        }
-    }
 }
 
 void MyProcessingClass::MainEntropy()
@@ -350,6 +329,5 @@ void MyProcessingClass::main_final_ENTROPY_ODC()
 
      *
      * */
-
 }
 

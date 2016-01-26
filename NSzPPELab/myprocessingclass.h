@@ -19,9 +19,12 @@ public:
     void show();
 
     void tests();
+
+    cv::Mat& getInput();
+    const cv::Mat& getCInput() const;
 private:
     void PreProcessingToEntropy();
-    cv::Mat ResizeImage();
+    void ResizeImage();
     void DiameterOfRoi();
     void EntropyOfImage();
     void LocalizeOpticDisc();
@@ -52,7 +55,7 @@ private:
 
     OpticDisc m_optic_disc;
     Sizei m_image_size;
-
+    Sizei m_window_size;
     int m_image_depth;
     float m_old_size_of_roi;
     float m_new_size_of_roi;

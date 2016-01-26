@@ -9,13 +9,16 @@ int main (int argc, char** argv)
     try
     {
         test_class.tests();
-        /* std::string argvstring(argv[1]);
+        std::string argvstring(argv[1]);
 
         if (argvstring.size() != 0)
         {
             test_class.read(argvstring);
+            test_class.getInput() = test_class.im2bw(test_class.getCInput(), 100);
+
             test_class.show();
-        }*/
+
+        }
 
     }
     catch(const cv::Exception& ex)
